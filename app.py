@@ -7,13 +7,11 @@ from datetime import datetime
 # Set page layout to wide
 st.set_page_config(layout="wide", page_title="Viagem para Bahia 2024")
 
-# st.set_option('Hello Streamlit!')
-# st.header('Viagem para Bahia 2024')
-st.header('Gastos da Viagem')
+st.header('Viagem para Bahia 2024')
+st.subheaderheader('Gastos da Viagem')
 
 # Load datafrma
-
-excel_file = 'ferias.xlsx'
+excel_file = 'feriass.xlsx'
 sheet_name = 'Gasto'
 
 df = pd.read_excel(excel_file, sheet_name=sheet_name)
@@ -34,20 +32,9 @@ data_selection = [datetime.combine(d, datetime.min.time()) for d in data_selecti
 tipo_seletion = st.multiselect('Selecione o tipo', tipos, default=tipos)
 tipos_pagamentos_seletion = st.multiselect('Selecione o tipo de pagamento', tipos_pagamentos, default=tipos_pagamentos)
 
-# Debug prints
-# st.write(f"Selected date range: {data_selection}")
-# st.write(f"Data type of 'Data' column: {df['Data'].dtype}")
-# st.write(f"Data selection type: {type(data_selection)}")
-# st.write(f"Data selection values: {data_selection}")
-
-# Filter dataframe based on date range selection
 mask = (df['Data'].between(*data_selection)) & (df['Tipo'].isin(tipo_seletion)) & (df['Tipo Pagamento'].isin(tipos_pagamentos_seletion))
 number_of_rows = df[mask].shape[0]
-# st.write(f"Number of rows: {number_of_rows}")
 
-# st.dataframe(df[mask])
-
-# Create two columns
 col1, col2 = st.columns(2)
 
 # Gráfico de Barras: Total de gastos por tipo de gasto
