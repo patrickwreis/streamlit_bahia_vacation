@@ -8,13 +8,17 @@ from datetime import datetime
 st.set_page_config(layout="wide", page_title="Viagem para Bahia 2024")
 
 st.header('Viagem para Bahia 2024')
-st.subheader('Gastos da Viagem')  # Corrigido erro de digitação
 
 # Load dataframe
 excel_file = 'feriass.xlsx'
 sheet_name = 'Gasto'
 
 df = pd.read_excel(excel_file, sheet_name=sheet_name)
+
+# Calculate total amount spent
+total_gasto = df['Valor'].sum()
+st.subheader('Gastos da Viagem') 
+st.subheader(f'Total Gasto: R$ {total_gasto:.2f}')  # Corrigido erro de digitação
 
 # Ensure 'Data' column is in datetime format
 df['Data'] = pd.to_datetime(df['Data'])
@@ -40,6 +44,7 @@ col1, col2 = st.columns(2)
 # Gráfico de Barras: Total de gastos por tipo de gasto
 with col1:
     df_grouped = df[mask].groupby('Tipo')['Valor'].sum().reset_index()  # Group by 'Tipo' and sum 'Valor'
+    df_grouped = df_grouped.sort_values(by='Valor', ascending=False)  # Ordenar do maior para o menor valor
     bar_chart = px.bar(df_grouped, x='Tipo', y='Valor', title='Total de Gastos por Tipo de Gasto', text_auto=True)
     bar_chart.update_traces(texttemplate='%{y:.2f}', textposition='outside')  # Add totals above bars
     st.plotly_chart(bar_chart)
