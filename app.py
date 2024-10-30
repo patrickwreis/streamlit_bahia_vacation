@@ -8,9 +8,9 @@ from datetime import datetime
 st.set_page_config(layout="wide", page_title="Viagem para Bahia 2024")
 
 st.header('Viagem para Bahia 2024')
-st.subheaderheader('Gastos da Viagem')
+st.subheader('Gastos da Viagem')  # Corrigido erro de digitação
 
-# Load datafrma
+# Load dataframe
 excel_file = 'feriass.xlsx'
 sheet_name = 'Gasto'
 
@@ -29,10 +29,10 @@ tipos_pagamentos = df['Tipo Pagamento'].unique().tolist()
 data_selection = st.slider('Selecione a data', min_value=min_data, max_value=max_data, value=(min_data, max_data), format="DD/MM/YYYY")
 data_selection = [datetime.combine(d, datetime.min.time()) for d in data_selection]  # Convert to datetime
 
-tipo_seletion = st.multiselect('Selecione o tipo', tipos, default=tipos)
-tipos_pagamentos_seletion = st.multiselect('Selecione o tipo de pagamento', tipos_pagamentos, default=tipos_pagamentos)
+tipo_selection = st.multiselect('Selecione o tipo', tipos, default=tipos)  # Corrigido erro de digitação
+tipos_pagamentos_selection = st.multiselect('Selecione o tipo de pagamento', tipos_pagamentos, default=tipos_pagamentos)  # Corrigido erro de digitação
 
-mask = (df['Data'].between(*data_selection)) & (df['Tipo'].isin(tipo_seletion)) & (df['Tipo Pagamento'].isin(tipos_pagamentos_seletion))
+mask = (df['Data'].between(*data_selection)) & (df['Tipo'].isin(tipo_selection)) & (df['Tipo Pagamento'].isin(tipos_pagamentos_selection))
 number_of_rows = df[mask].shape[0]
 
 col1, col2 = st.columns(2)
